@@ -1,4 +1,4 @@
-a = "angel "
-b = "marica"
+a = "hola "
+b = "angel"
 
 print(a+b)
