@@ -1,2 +1,1 @@
-# ProjecteAleix~
 # Hola
