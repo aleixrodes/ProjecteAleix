@@ -1,4 +1,2 @@
-a = "angel "
-b = "maarica"
-
-print(a+b)
+import tkinter as tk
+print("Tkinter está instalado correctamente.")
