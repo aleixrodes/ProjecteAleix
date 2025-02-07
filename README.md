@@ -1,1 +1,1 @@
-# Hola 
+# He decidit fer el joc del pong
