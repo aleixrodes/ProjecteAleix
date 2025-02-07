@@ -1,1 +1,1 @@
-# He decidit fer el joc del pong
+# He decidit fer un joc de carreres
