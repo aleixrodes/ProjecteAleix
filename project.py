@@ -26,6 +26,10 @@ jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a juga
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
 velocitat = 5 # Velocitat de moviment del cotxe
 
+# Límits carretera
+marge_esquerre = 50  # Límit esquerra
+marge_dret = amplada - 50  # Límit dret 
+
 # Rellotge
 rellotge = pygame.time.Clock() # Rellotge per a controlar els FPS
 
@@ -46,4 +50,4 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     pygame.display.flip() # Actualitza la pantalla per a ensenyar els canvis
 
 
-pygame.quit() # Tanca pygame
+pygame.quit() # Tanca pygame 
