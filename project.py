@@ -24,7 +24,7 @@ fons = pygame.transform.scale(fons, (amplada, altura))  # Ajustar la mida de la 
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
-velocitat = 5 # Velocitat de moviment del cotxe
+velocitat = 7 # Velocitat de moviment del cotxe
 
 # Límits carretera
 marge_esquerre = 50  # Límit esquerra
@@ -36,12 +36,19 @@ rellotge = pygame.time.Clock() # Rellotge per a controlar els FPS
 # El bucle del joc
 jugant = True # Aquesta variable diu que el joc s'inicia, ja que està en true, si està en false el joc acabarà
 while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
-    rellotge.tick(60) # Es juga a 40 FPS
+    rellotge.tick(90) # Es juga a 90 FPS
 
     # Per a poder tancar la finestra
     for esdeveniment in pygame.event.get(): # Per a capturar els esdeveniments (tecles, ratolí, tancar finestra...)
         if esdeveniment.type == pygame.QUIT: # Si es detecta QUIT fa el següent:
             jugant = False # S'acaba el joc
+    
+    # Moviment del jugador
+    tecla = pygame.key.get_pressed() # Detecta les tecles
+    if tecla[pygame.K_LEFT] and jugador_x > marge_esquerre: # Si es detecta aquesta tecla fa el següent:
+        jugador_x -= velocitat # Es mou a l'esquerra (velocitat negativa)
+    if tecla[pygame.K_RIGHT] and jugador_x < marge_dret -106: # Si es detecta aquesta tecla fa el següent:
+        jugador_x += velocitat # Es mou a la dreta (velocitat positiva)
     
     # Fotos del joc
     pantalla.blit(fons, (0, 0)) # Posar el fons
