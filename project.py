@@ -1,4 +1,5 @@
 import pygame # Importar llibreria pygame
+import random # Importar llibreria random
 
 # Iniciar Pygame
 pygame.init() # Inicia pygame i els seus mòduls (gràfics, so...)
@@ -24,11 +25,21 @@ fons = pygame.transform.scale(fons, (amplada, altura))  # Ajustar la mida de la 
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
-velocitat = 7 # Velocitat de moviment del cotxe
+velocitat = 5 # Velocitat de moviment del cotxe
 
 # Límits carretera
 marge_esquerre = 50  # Límit esquerra
 marge_dret = amplada - 50  # Límit dret 
+
+# Obstacles
+obstacles = [] # Llista per a guardar els obstacles
+velocitat_obstacles = 5 # Velocitat dels obstacles
+amplada_obs, altura_obs = 50, 100 # Mesures dels obstacles
+
+def crear_obstacle(): # Funció per a crear obstacles
+    x = random.randint(0, amplada - amplada_obs) # Que l'objecte és crei en una posició horitzontal aleatòria
+    y = -altura_obs # Que l'objecte és crei a sobre la pantalla
+    obstacles.append(pygame.Rect(x, y, amplada_obs, altura_obs)) # Per a agregar l'obstacle a la llista
 
 # Rellotge
 rellotge = pygame.time.Clock() # Rellotge per a controlar els FPS
@@ -36,7 +47,7 @@ rellotge = pygame.time.Clock() # Rellotge per a controlar els FPS
 # El bucle del joc
 jugant = True # Aquesta variable diu que el joc s'inicia, ja que està en true, si està en false el joc acabarà
 while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
-    rellotge.tick(90) # Es juga a 90 FPS
+    rellotge.tick(60) # Es juga a 60 FPS
 
     # Per a poder tancar la finestra
     for esdeveniment in pygame.event.get(): # Per a capturar els esdeveniments (tecles, ratolí, tancar finestra...)
@@ -50,11 +61,31 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     if tecla[pygame.K_RIGHT] and jugador_x < marge_dret -106: # Si es detecta aquesta tecla fa el següent:
         jugador_x += velocitat # Es mou a la dreta (velocitat positiva)
     
+    # Crear obstacles
+    if random.randint(1, 40) == 1:  # Probabilitat d'aparèixer un obstacle
+        crear_obstacle() # Genera l'obstacle
+    
+    # Moure obstacles
+    for obs in obstacles: # Selecciona tots els obstacles
+        obs.y += velocitat_obstacles # Fa que baixin per la pantalla (posició y)
+    
+    # Col·lisions
+    for obs in obstacles: # Recorre la llista d'obstacles
+        if obs.colliderect(pygame.Rect(jugador_x, jugador_y, 96, 216)): # Comprova si el cotxe i un obstacle es toquen
+            print("¡Chocaste! Game Over") # Si és cert es mostrarà aquest text
+            jugant = False # Acaba el joc
+    
+    # Eliminar obstacles
+    obstacles = [obs for obs in obstacles if obs.y < altura] # Elimina el obstacles de fora la pantalla
+    
     # Fotos del joc
     pantalla.blit(fons, (0, 0)) # Posar el fons
     pantalla.blit(cotxe, (jugador_x, jugador_y)) # Posar el cotxe
     
+    # Personalitzar obstacles
+    for obs in obstacles: # Recorre els obstacles
+        pygame.draw.rect(pantalla, vermell, obs) # Els fa de color vermell
+    
     pygame.display.flip() # Actualitza la pantalla per a ensenyar els canvis
 
-
-pygame.quit() # Tanca pygame 
+pygame.quit() # Tanca pygame
