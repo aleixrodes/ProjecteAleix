@@ -30,6 +30,8 @@ velocitat = 5 # Velocitat de moviment del cotxe
 # Límits carretera
 marge_esquerre = 50  # Límit esquerra
 marge_dret = amplada - 50  # Límit dret 
+marge_superior = 100  # Límit superior
+marge_inferior = altura - 216  # Límit inferior (evita sortir de la pantalla)
 
 # Obstacles
 obstacles = [] # Llista per a guardar els obstacles
@@ -57,9 +59,13 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     # Moviment del jugador
     tecla = pygame.key.get_pressed() # Detecta les tecles
     if tecla[pygame.K_LEFT] and jugador_x > marge_esquerre: # Si es detecta aquesta tecla fa el següent:
-        jugador_x -= velocitat # Es mou a l'esquerra (velocitat negativa)
+        jugador_x -= velocitat # Es mou a l'esquerra (velocitat negativa en x)
     if tecla[pygame.K_RIGHT] and jugador_x < marge_dret -106: # Si es detecta aquesta tecla fa el següent:
-        jugador_x += velocitat # Es mou a la dreta (velocitat positiva)
+        jugador_x += velocitat # Es mou a la dreta (velocitat positiva en x)
+    if tecla[pygame.K_UP] and jugador_y > marge_superior:  # Si es detecta aquesta tecla fa el següent:
+        jugador_y -= velocitat # Es mou cap a amunt (velocitat positiva en y)
+    if tecla[pygame.K_DOWN] and jugador_y < marge_inferior:  # Si es detecta aquesta tecla fa el següent:
+        jugador_y += velocitat # Es mou cap a abaix (velocitat negativa en y)
     
     # Crear obstacles
     if random.randint(1, 40) == 1:  # Probabilitat d'aparèixer un obstacle
