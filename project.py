@@ -25,6 +25,11 @@ cotxe = pygame.transform.scale(cotxe, (96, 216)) # Dimensions del cotxe (per tan
 fons = pygame.image.load("fons1.png")  # Canvia "fons.png" pel nom del teu fitxer
 fons = pygame.transform.scale(fons, (amplada, altura))  # Ajustar la mida de la imatge a la pantalla
 
+# Imatge twingo
+twingo = pygame.image.load("twingo.png")  # Utilitzar una imatge pel cotxe (.png en la carpeta del projecte)
+twingo = pygame.transform.scale(twingo, ()) # Dimensions del cotxe (per tant, de la imatge)
+
+
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
@@ -99,6 +104,7 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     # Fotos del joc
     pantalla.blit(fons, (0, 0)) # Posar el fons
     pantalla.blit(cotxe, (jugador_x, jugador_y)) # Posar el cotxe
+    pantalla.blit(twingo, ()) # Posar els obstacles
     
     # Personalitzar obstacles
     for obs in obstacles: # Recorre els obstacles
