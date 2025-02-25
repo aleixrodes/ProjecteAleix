@@ -14,7 +14,7 @@ blanc = (255, 255, 255) # Color blanc
 negre = (0, 0, 0) # Color negre
 
 # Font per al temporitzador
-font = pygame.font.Font(None, 40)  # Font i mida de la lletra
+font = pygame.font.Font(None, 45)  # Font i mida de la lletra
 
 # Imatge cotxe
 cotxe = pygame.image.load("cotxe1.png")  # Utilitzar l'imatge cotxe2.png pel cotxe (.png en la carpeta del projecte)
@@ -31,7 +31,7 @@ twingo = pygame.transform.scale(twingo, (80, 160)) # Dimensions del cotxe (per t
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
-velocitat = 7 # Velocitat de moviment del cotxe
+velocitat = 7.5 # Velocitat de moviment del cotxe
 
 # Límits carretera
 marge_esquerre = 50  # Límit esquerra
@@ -42,7 +42,7 @@ marge_inferior = altura - 216  # Límit inferior
 # Obstacles
 obstacles = []  # Llista per a guardar els obstacles
 velocitat_obstacles = 5  # Velocitat inicial dels obstacles
-freqencia_obstacles = 70  # Freqüència inicial d'aparició d'obstacles
+freqencia_obstacles = 75  # Freqüència inicial d'aparició d'obstacles
 amplada_obs, altura_obs = 80, 160  # Dimensions dels obstacles
 
 def crear_obstacle(): # Funció per a crear obstacles
@@ -82,7 +82,7 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
         jugador_y += velocitat # Es mou cap a abaix (velocitat negativa en y)
     
     # Crear obstacles
-    if random.randint(1, 70) == 1:  # Probabilitat d'aparèixer un obstacle
+    if random.randint(1, 75) == 1:  # Probabilitat d'aparèixer un obstacle
         crear_obstacle() # Genera l'obstacle
     
     obstacles = [(x, y + velocitat_obstacles) for x, y in obstacles]  # Moure obstacles
