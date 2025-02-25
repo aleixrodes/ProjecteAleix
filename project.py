@@ -27,13 +27,12 @@ fons = pygame.transform.scale(fons, (amplada, altura))  # Ajustar la mida de la 
 
 # Imatge twingo
 twingo = pygame.image.load("twingo.png")  # Utilitzar una imatge pel cotxe (.png en la carpeta del projecte)
-twingo = pygame.transform.scale(twingo, ()) # Dimensions del cotxe (per tant, de la imatge)
-
+twingo = pygame.transform.scale(twingo, (100, 200)) # Dimensions del cotxe (per tant, de la imatge)
 
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
 jugador_y = altura - 250 # Posició d'altura del cotxe en començar a jugar
-velocitat = 5 # Velocitat de moviment del cotxe
+velocitat = 7 # Velocitat de moviment del cotxe
 
 # Límits carretera
 marge_esquerre = 50  # Límit esquerra
@@ -45,12 +44,12 @@ marge_inferior = altura - 216  # Límit inferior
 obstacles = []  # Llista per a guardar els obstacles
 velocitat_obstacles = 5  # Velocitat inicial dels obstacles
 freqencia_obstacles = 50  # Freqüència inicial d'aparició d'obstacles
-amplada_obs, altura_obs = 50, 100  # Dimensions dels obstacles
+amplada_obs, altura_obs = 100, 200  # Dimensions dels obstacles
 
 def crear_obstacle(): # Funció per a crear obstacles
     x = random.randint(0, amplada - amplada_obs) # Que l'objecte és crei en una posició horitzontal aleatòria
     y = -altura_obs # Que l'objecte és crei a sobre la pantalla
-    obstacles.append(pygame.Rect(x, y, amplada_obs, altura_obs)) # Per a agregar l'obstacle a la llista
+    obstacles.append((x, y)) # Crear obstacles com a rectangles
 
 # Rellotge
 rellotge = pygame.time.Clock() # Rellotge per a controlar els FPS
@@ -85,37 +84,34 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
         jugador_y += velocitat # Es mou cap a abaix (velocitat negativa en y)
     
     # Crear obstacles
-    if random.randint(1, 40) == 1:  # Probabilitat d'aparèixer un obstacle
+    if random.randint(1, 70) == 1:  # Probabilitat d'aparèixer un obstacle
         crear_obstacle() # Genera l'obstacle
     
-    # Moure obstacles
-    for obs in obstacles: # Selecciona tots els obstacles
-        obs.y += velocitat_obstacles # Fa que baixin per la pantalla (posició y)
+    obstacles = [(x, y + velocitat_obstacles) for x, y in obstacles]  # Moure obstacles
     
     # Col·lisions
-    for obs in obstacles: # Recorre la llista d'obstacles
-        if obs.colliderect(pygame.Rect(jugador_x, jugador_y, 96, 216)): # Comprova si el cotxe i un obstacle es toquen
+    for x, y in obstacles: # Selecciona tots els obstacles
+        if pygame.Rect(x, y, amplada_obs, altura_obs).colliderect(pygame.Rect(jugador_x, jugador_y, 96, 216)):# Comprova si el cotxe i un obstacle es toquen
             print("Game Over. Has durat:" , temps_joc , "segons" ) # Si és cert es mostrarà aquest text
             jugant = False # Acaba el joc
     
     # Eliminar obstacles
-    obstacles = [obs for obs in obstacles if obs.y < altura] # Elimina el obstacles de fora la pantalla
+    obstacles = [(x, y) for x, y in obstacles if y < altura] # Elimina el obstacles de fora la pantalla
     
     # Fotos del joc
     pantalla.blit(fons, (0, 0)) # Posar el fons
     pantalla.blit(cotxe, (jugador_x, jugador_y)) # Posar el cotxe
-    pantalla.blit(twingo, ()) # Posar els obstacles
     
     # Personalitzar obstacles
-    for obs in obstacles: # Recorre els obstacles
-        pygame.draw.rect(pantalla, vermell, obs) # Els fa de color vermell
+    for x, y in obstacles:  
+        pantalla.blit(twingo, (x, y))  # Dibuixar el Twingo amb les coordenades correctes
+
     
        # Dibuixar el temps a la pantalla amb contorn negre
     temps_text = font.render(f"Temps: {temps_joc // 60}s", True, blanc)  # Crear el text
     contorn_text = font.render(f"Temps: {temps_joc // 60}s", True, negre)  # Crear el contorn negre
     pantalla.blit(contorn_text, (13, 13))  # Dibuixar el contorn lleugerament desplaçat
     pantalla.blit(temps_text, (10, 10))  # Dibuixar el text
-
 
     pygame.display.flip() # Actualitza la pantalla per a ensenyar els canvis
 
