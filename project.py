@@ -12,22 +12,21 @@ pygame.display.set_caption("Carrera de cotxes") # Defineixo el nom de la finestr
 # Estableixo colors per a el fons
 blanc = (255, 255, 255) # Color blanc
 negre = (0, 0, 0) # Color negre
-vermell = (255, 0, 0) # Clolor vermell
 
 # Font per al temporitzador
-font = pygame.font.Font(None, 40)  # Font predeterminada de Pygame
+font = pygame.font.Font(None, 40)  # Font i mida de la lletra
 
 # Imatge cotxe
-cotxe = pygame.image.load("cotxe1.png")  # Utilitzar una imatge pel cotxe (.png en la carpeta del projecte)
+cotxe = pygame.image.load("cotxe1.png")  # Utilitzar l'imatge cotxe2.png pel cotxe (.png en la carpeta del projecte)
 cotxe = pygame.transform.scale(cotxe, (96, 216)) # Dimensions del cotxe (per tant, de la imatge)
 
 # Imatge fons
-fons = pygame.image.load("fons1.png")  # Canvia "fons.png" pel nom del teu fitxer
+fons = pygame.image.load("fons1.png")  # Utilitza l'imatge fons1.png per el fons (.png en la carpeta del projecte)
 fons = pygame.transform.scale(fons, (amplada, altura))  # Ajustar la mida de la imatge a la pantalla
 
 # Imatge twingo
-twingo = pygame.image.load("twingo.png")  # Utilitzar una imatge pel cotxe (.png en la carpeta del projecte)
-twingo = pygame.transform.scale(twingo, (100, 200)) # Dimensions del cotxe (per tant, de la imatge)
+twingo = pygame.image.load("twingo.png")  # Utilitzar l'imatge twingo.png pel cotxe (.png en la carpeta del projecte)
+twingo = pygame.transform.scale(twingo, (80, 160)) # Dimensions del cotxe (per tant, de la imatge)
 
 # Paràmetres del jugador
 jugador_x = amplada // 2 - 62 # Posició d'amplada del cotxe en començar a jugar
@@ -43,8 +42,8 @@ marge_inferior = altura - 216  # Límit inferior
 # Obstacles
 obstacles = []  # Llista per a guardar els obstacles
 velocitat_obstacles = 5  # Velocitat inicial dels obstacles
-freqencia_obstacles = 50  # Freqüència inicial d'aparició d'obstacles
-amplada_obs, altura_obs = 100, 200  # Dimensions dels obstacles
+freqencia_obstacles = 70  # Freqüència inicial d'aparició d'obstacles
+amplada_obs, altura_obs = 80, 160  # Dimensions dels obstacles
 
 def crear_obstacle(): # Funció per a crear obstacles
     x = random.randint(0, amplada - amplada_obs) # Que l'objecte és crei en una posició horitzontal aleatòria
@@ -63,7 +62,7 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
 
  # Augmentar dificultat amb el temps
     if temps_joc % 600 == 0:  # Cada 10 segons (60 FPS * 10 segons)
-        velocitat_obstacles += 1  # Augmenta la velocitat dels obstacles
+        velocitat_obstacles += 0.5  # Augmenta la velocitat dels obstacles
         freqencia_obstacles = max(10, freqencia_obstacles - 4)  # Augmenta la freqüència d'aparició
 
 
@@ -92,7 +91,7 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     # Col·lisions
     for x, y in obstacles: # Selecciona tots els obstacles
         if pygame.Rect(x, y, amplada_obs, altura_obs).colliderect(pygame.Rect(jugador_x, jugador_y, 96, 216)):# Comprova si el cotxe i un obstacle es toquen
-            print("Game Over. Has durat:" , temps_joc , "segons" ) # Si és cert es mostrarà aquest text
+            print("Game Over. Has fet:" , temps_joc , "punts" ) # Si és cert es mostrarà aquest text
             jugant = False # Acaba el joc
     
     # Eliminar obstacles
@@ -103,11 +102,11 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     pantalla.blit(cotxe, (jugador_x, jugador_y)) # Posar el cotxe
     
     # Personalitzar obstacles
-    for x, y in obstacles:  
+    for x, y in obstacles:  # Selecciona els obstacles
         pantalla.blit(twingo, (x, y))  # Dibuixar el Twingo amb les coordenades correctes
 
     
-       # Dibuixar el temps a la pantalla amb contorn negre
+    # Dibuixar el temps a la pantalla amb contorn negre
     temps_text = font.render(f"Temps: {temps_joc // 60}s", True, blanc)  # Crear el text
     contorn_text = font.render(f"Temps: {temps_joc // 60}s", True, negre)  # Crear el contorn negre
     pantalla.blit(contorn_text, (13, 13))  # Dibuixar el contorn lleugerament desplaçat
