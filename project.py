@@ -65,7 +65,6 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
         velocitat_obstacles += 0.5  # Augmenta la velocitat dels obstacles
         freqencia_obstacles = max(10, freqencia_obstacles - 4)  # Augmenta la freqüència d'aparició
 
-
     # Per a poder tancar la finestra
     for esdeveniment in pygame.event.get(): # Per a capturar els esdeveniments (tecles, ratolí, tancar finestra...)
         if esdeveniment.type == pygame.QUIT: # Si es detecta QUIT fa el següent:
@@ -105,7 +104,6 @@ while jugant: # Mentre jugant sigui True el joc continuarà executant-se.
     for x, y in obstacles:  # Selecciona els obstacles
         pantalla.blit(twingo, (x, y))  # Dibuixar el Twingo amb les coordenades correctes
 
-    
     # Dibuixar el temps a la pantalla amb contorn negre
     temps_text = font.render(f"Temps: {temps_joc // 60}s", True, blanc)  # Crear el text
     contorn_text = font.render(f"Temps: {temps_joc // 60}s", True, negre)  # Crear el contorn negre

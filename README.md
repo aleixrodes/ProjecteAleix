@@ -1,6 +1,7 @@
 # Explicació del Joc 
  
 
+
 **Objectiu** 
 
 Has de controlar un cotxe i esquivar els obstacles que cauen des de dalt. A mesura que passa el temps, els obstacles es mouen més ràpidament i apareixen amb més freqüència. El joc acaba si el cotxe xoca amb un obstacle. 
